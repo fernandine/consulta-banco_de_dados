@@ -13,8 +13,8 @@ import com.devsuperior.uri2602.projections.CustomerMinProjections;
 import com.devsuperior.uri2602.repositories.CustomerRepository;
 
 @SpringBootApplication
-public class Uri2602Application implements CommandLineRunner{
-	
+public class Uri2602Application implements CommandLineRunner {
+
 	@Autowired
 	private CustomerRepository repository;
 
@@ -24,13 +24,23 @@ public class Uri2602Application implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		
+
 		List<CustomerMinProjections> list = repository.search1("RS");
+
 		List<CustomerMinDTO> result1 = list.stream().map(x -> new CustomerMinDTO(x)).collect(Collectors.toList());
-		
+
+		System.out.println("\n***RESULTADO SQL RAIZ: ");
 		for (CustomerMinDTO obj : result1) {
 			System.out.println(obj);
 		}
-		
+
+		System.out.println("\n\n");
+
+		List<CustomerMinDTO> result2 = repository.search2("rs");
+
+		System.out.println("\n***RESULTADO JPQL: ");
+		for (CustomerMinDTO obj : result2) {
+			System.out.println(obj);
+		}
 	}
 }
